@@ -35,9 +35,19 @@ function scene:create( event )
 	local mapData = json.decodeFile( system.pathForFile( filename, system.ResourceDirectory ) )
 	map = tiled.new( mapData, "assets/maps" )
     --map.xScale, map.yScale = 0.85, 0.85
+
+    local theMushroom = display.newImage( "./assets/sprites/environment/mushroom_red.png" )
+    theMushroom.x = display.contentWidth / 2 - 500
+    theMushroom.y = 0
+    theMushroom.id = "the mushroom"
+    physics.addBody( theMushroom, "dynamic", { 
+        friction = 0.5, 
+        bounce = 0.3 
+        } )
     
     -- Insert our game items in the correct back-to-front order
-	sceneGroup:insert( map )
+    sceneGroup:insert( map )
+    sceneGroup:insert( theMushroom )
  
 end
  
@@ -49,15 +59,6 @@ function scene:show( event )
     local phase = event.phase
  
     if ( phase == "will" ) then
-        local theMushroom = display.newImage( "./assets/sprites/environment/mushroom_red.png" )
-        theMushroom.x = display.contentWidth / 2 - 500
-        theMushroom.y = 0
-        theMushroom.id = "the mushroom"
-        physics.addBody( theMushroom, "dynamic", { 
-            friction = 0.5, 
-            bounce = 0.3 
-            } )
-        sceneGroup:insert( theMushroom )
  
     elseif ( phase == "did" ) then
         -- Code here runs when the scene is entirely on screen
